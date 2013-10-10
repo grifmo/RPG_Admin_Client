@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <style>
+            body {
+                padding-top: 50px;
+                padding-bottom: 20px;
+            }
+        </style>
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/main.css">
+
+        <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+   
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+        <h1>RPG API</h1>
+        <p>Use this page to administer the RPG database</p>
+        <div class="input-group">
+            <span class="input-group-addon">host name: </span>
+             <input type="text" class="form-control" data-bind="value: hostName">
+            </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-lg-3">
+          <h2>Tokens</h2>
+          <div class="token_list">    
+              <div data-bind="foreach: tokens, visible: tokens().length > 0">
+                <div class="token_item">
+                    <div class="token_icon" data-bind="style:{backgroundColor: getColor()}"><div class="token_shortcode"><div data-bind="text:shortcode"></div></div></div>
+                    <div class="token_text" data-bind="text:text"></div>                
+                    <div class="token_actions"><button data-toggle="collapse" data-parent="#selector" data-target="collapsetest">edit</button></div>
+                    <div class="collapse" id="collapsetest">
+                        <p> some text</p>
+                        <p> some more text</p>                        
+                  </div>
+                </div>
+                  <div class="clear_both"></div>
+                  
+              </div>
+          </div>
+          <button>Add question</button>
+        </div>
+        <div class="col-lg-9">
+          <h2>Questions</h2>
+          <div class="question_list">    
+              <div data-bind="foreach: questions, visible: questions().length > 0">
+                    <div class="question_item"> 
+                        <div class="question_text" data-bind="text:text"></div>                
+                        <div class="question_actions"><button data-bind="$root.jqButton:{}, click:$parent.edit">edit</button></div>
+                    </div>
+                  <div class="clear_both"></div>
+              </div>
+          </div>
+          <button>Add question</button>
+       </div>
+      </div>
+
+      <hr>
+
+      <footer>
+        <p>&copy; Company 2013</p>
+      </footer>
+    </div> <!-- /container -->        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.js"><\/script>');</script>
+
+        <script src="js/vendor/bootstrap.min.js"></script>
+        <script src="js/libs/knockout-2.2.1/knockout-min.js"></script>
+        <script src="js/main.js"></script>
+        
+        
+    </body>
+</html>

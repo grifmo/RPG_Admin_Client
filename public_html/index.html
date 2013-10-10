@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/colorpicker.css">
+        <style>
+            body {
+                padding-top: 50px;
+                padding-bottom: 20px;
+            }
+        </style>
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/main.css">
+
+        <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+
+        <!-- Main jumbotron for a primary marketing message or call to action -->
+        <div class="jumbotron">
+            <div class="container" id='main'>
+                <h1>RPG API</h1>
+                <p>Use this page to administer the RPG database</p>
+                <div class="input-group">
+                    <span class="input-group-addon">host name: </span>
+                    <input type="text" class="form-control" data-bind="value: hostName">
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- Example row of columns -->
+            <div class="row">
+                <div class="col-lg-3">
+                    <h2>Tokens</h2>
+                    <div class="token_list panel-group" id='tokens'>    
+                        <div class="panel panel-default" data-bind="foreach: tokens, visible: tokens().length > 0">
+                            <div class="token_item panel-heading">
+                                <div class="token_icon" data-bind="style:{backgroundColor: getColor()}"><div class="token_shortcode"><div data-bind="text:shortcode"></div></div></div>
+                                <div class="token_text" data-bind="text:text"></div>                
+                                <div class="token_actions">
+                                    <button class="btn btn-xs btn-info" data-bind="attr:{'data-target':'#'+getEditDivId()}, click:$parent.beginEdit" data-toggle="collapse" data-parent="#accordion" ><span class="glyphicon glyphicon-edit"></span></button>
+                                    <button class="btn btn-xs btn-danger" data-bind="click:$parent.beginDelete" ><span class="glyphicon glyphicon-trash"></button>
+                                </div>
+                                <div class="clear_both"></div>
+                                <div data-bind="attr:{id:getEditDivId()}" class="panel-collapse collapse">
+                                    <div class="panel-body"> 
+                                        <div class="input-group">
+                                            <span class="input-group-addon">text: </span>
+                                            <input type="text" class="form-control" data-bind="value: getText(), attr:{id:'edittxt_'+_id()}">
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">shortcode: </span>
+                                            <input type="text" class="form-control" data-bind="value: getShortcode(), attr:{id:'editsc_'+_id()}">
+                                        </div>
+                                        <div class="input-append color" data-bind="attr:{'data-color':getColor(), id:'cp_'+_id()}" data-color="hex(255, 146, 180)" data-color-format="hex">
+                                            <span class="add-on"><i data-bind="style:{backgroundColor:getColor()}"></i></span>
+                                            <input class="span2" data-bind="value:getColor(), attr:{id:'editclr_'+_id()}" readonly="" type="text">
+
+                                        </div>
+                                        <button class='btn btn-warning' data-bind="click:$parent.edit" >update</button>
+                                    </div>                       
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <button class='btn btn-success' data-bind="click:beginAdd">Add Token</button>
+                    </div>
+
+                </div>
+                <div class="col-lg-9">
+                    <h2>Questions</h2>
+                    <div class="question_list panel-group" id='questions'>    
+                        <div class="panel panel-default" data-bind="foreach: questions, visible: questions().length > 0">
+                            <div class="question_item panel-heading"> 
+                                <div class="question_text" data-bind="text:text"></div>                
+                                <div class="question_actions">
+                                    <button class="btn btn-xs btn-info" data-toggle="collapse" data-parent="#accordion" data-bind="attr:{'data-target':'#'+getEditDivId()}, click:$parent.beginEdit"><span class="glyphicon glyphicon-edit"></span></button>
+                                    <button class="btn btn-xs btn-danger" data-bind="click:$parent.beginDelete" ><span class="glyphicon glyphicon-trash"></button>
+                                </div>
+
+                                <div class="clear_both"></div>
+                                <div data-bind="attr:{id:getEditDivId()}" class="panel-collapse collapse">
+                                    <div class="panel-body"> 
+                                        <div class="input-group">
+                                            <span class="input-group-addon">text: </span>
+                                            <input type="text" class="form-control" data-bind="value: getText(), attr:{id:'editQT_'+_id()}">
+                                        </div>
+                                        <div class='qtoken' data-bind="foreach: results">
+                                            <div class="question_result_group">
+                                                <div class='well'>
+                                                    <div class="token_icon_question" data-bind="style:{backgroundColor: token().getColor}">
+                                                        <div class="token_shortcode">
+                                                            <div data-bind="text:token().shortcode"></div>
+                                                        </div>                                        
+                                                    </div>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">yes: </span>
+                                                        <input type="text" class="form-control" data-bind="value: yes, attr:{id:'editRYes_'+token()._id()}" />
+                                                    </div>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">no: </span>
+                                                        <input type="text" class="form-control" data-bind="value: no, attr:{id:'editRNo_'+token()._id()}" />
+                                                    </div>
+                                                </div>      
+                                            </div>
+                                        </div>
+                                        <div class='clear_both'>
+                                            <button class='btn btn-warning' data-bind="click:$parent.edit" >update</button>
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class='btn btn-success'data-bind="click:beginAdd">Add question</button>
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="myTModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Add Question</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div data-bind="attr:{id:getEditDivId()}" class="new_token_modal">
+                                    <div class="new_token_modal_body"> 
+                                        <div class="input-group">
+                                            <span class="input-group-addon">text: </span>
+                                            <input type="text" class="form-control" data-bind="value: text, attr:{id:'edittxt_'+_id()}" />
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">shortcode: </span>
+                                            <input type="text" class="form-control" data-bind="value: shortcode, attr:{id:'newsc_'+_id()}" />
+                                        </div>
+                                        <div class="input-append color" data-bind="attr:{'data-color':getColor(), id:'newcp_'+_id()}" data-color="hex(255, 146, 180)" data-color-format="hex">
+                                            <span class="add-on"><i data-bind="style:{backgroundColor:getColor()}"></i></span>
+                                            <input class="span2" data-bind="value:getColor, attr:{id:'newclr_'+_id()}" readonly="" type="text" />
+
+                                        </div>
+                                    </div>                       
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" data-bind="click:addNew">Save changes</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+
+                <!-- Modal -->
+                <div class="modal fade" id="myQModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Add Question</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div data-bind="attr:{id:getEditDivId()}" class="new_question_modal">
+                                    <div class="new_question_modal_body"> 
+                                        <div class="input-group">
+                                            <span class="input-group-addon">text: </span>
+                                            <input type="text" class="form-control" data-bind="value: text" />
+                                        </div>
+                                        <div class='qtoken' data-bind="foreach: results">
+                                            <div class="modal_question_result_group">
+                                                <div class='well'>
+                                                    <div class="token_icon_question" data-bind="style:{backgroundColor: token().getColor}">
+                                                        <div class="token_shortcode">
+                                                            <div data-bind="text:token().shortcode"></div>
+                                                        </div>                                        
+                                                    </div>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">yes: </span>
+                                                        <input type="text" class="form-control" data-bind="value: yes" />
+                                                    </div>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">no: </span>
+                                                        <input type="text" class="form-control" data-bind="value:no" />
+                                                    </div>
+                                                </div>      
+                                            </div>
+                                        </div>
+                                        <div class='clear_both'>
+                                        </div>                       
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" data-bind="click:addNew">Save changes</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+                <hr>
+
+                <footer>
+                    <p>&copy; Abbazaba Ltd 2013</p>
+                </footer>
+            </div> <!-- /container -->        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.js"></script>
+            <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.js"><\/script>');</script>
+
+            <script src="js/vendor/bootstrap.min.js"></script>
+            <script src="js/bootstrap-colorpicker.js"></script>
+            <script src="js/libs/knockout-2.2.1/knockout-min.js"></script>
+            <script src="js/main2.js"></script>
+
+
+    </body>
+</html>
